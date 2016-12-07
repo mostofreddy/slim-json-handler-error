@@ -10,7 +10,7 @@ Este middleware esta pensado para ser utilizado cuando se desarrollan apis Restf
 Versión estable
 ---------------
 
-0.1.0
+0.1.1
 
 License
 -------
