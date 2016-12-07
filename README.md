@@ -1,6 +1,8 @@
 Slim Json Error Handler
 ======================
 
+[![Build Status](https://travis-ci.org/mostofreddy/slim-json-handler-error.svg?branch=master)](https://travis-ci.org/mostofreddy/slim-json-handler-error)
+
 Handlers de errores para Slim que siempre devuelven los errores en formato JSON utilizando el estandar de JSON-API.
 
 Este middleware esta pensado para ser utilizado cuando se desarrollan apis Restfull que devuelven siempre formato JSON
@@ -147,7 +149,9 @@ Clase: `\Resty\Handler\Error`
 ```
 
 
-## Ejemplo de uso
+## Ejemplos de uso
+
+### Configurar middleware para todas las rutas
 
 ```
 require_once "../vendor/autoload.php";
@@ -164,7 +168,6 @@ $config['settings'] = [
 
 $api = new App($config);
 
-// Agrega Middleware para cambiar los handlers
 $api->add('\Resty\ErrorHandlerMiddleware');
 
 $api->get('/', function (ServerRequestInterface $request, ResponseInterface $response) {
@@ -172,5 +175,30 @@ $api->get('/', function (ServerRequestInterface $request, ResponseInterface $res
     $body->write('Hello');
     return $response;
 });
+$api->run();
+```
+
+### Configurar middleware para alguna ruta (o grupo) en particular
+
+```
+require_once "../vendor/autoload.php";
+
+use Slim\App;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
+$config = [];
+$config['settings'] = [
+    "displayErrorDetails" => true, // or false
+    "determineRouteBeforeAppMiddleware" => true
+];
+
+$api = new App($config);
+
+$api->get('/', function (ServerRequestInterface $request, ResponseInterface $response) {
+    $body = $response->getBody();
+    $body->write('Hello');
+    return $response;
+})->add('\Resty\ErrorHandlerMiddleware');;
 $api->run();
 ```
