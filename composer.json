@@ -1,0 +1,30 @@
+{
+    "name": "restyphp/slim-json-handler-error",
+    "type": "library",
+    "description": "Reemplaza los handlers de error de Slim para que siempre devuelve formato JSON sin importar el valor de la cabecera Content-type",
+    "keywords": ["slim", "framework", "micro", "error", "error handler", "json"],
+    "homepage": "https://github.com/mostofreddy/slim-json-handler-error",
+    "license": "MIT",
+    "version": "0.1.0",
+    "authors": [
+        {
+            "name": "Federico Lozada Mosto",
+            "email": "mosto.federico@gmail.com",
+            "homepage": "http://www.mostofreddy.com.ar"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.5.*",
+        "squizlabs/php_codesniffer": "2.7.*",
+        "slim/slim": "3.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Resty\\": "src/",
+            "Resty\\Test\\": "tests/src/"
+        }
+    }
+}
