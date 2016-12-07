@@ -1,7 +1,9 @@
 Slim Json Error Handler
 ======================
 
-Reemplaza los handlers de error de Slim para que siempre devuelve formato JSON sin importar el valor de la cabecera Content-type
+Handlers de errores para Slim que siempre devuelven los errores en formato JSON utilizando el estandar de JSON-API.
+
+Este middleware esta pensado para ser utilizado cuando se desarrollan apis Restfull que devuelven siempre formato JSON
 
 Versión estable
 ---------------
@@ -13,8 +15,8 @@ License
 
 The MIT License (MIT). Ver el archivo [LICENSE](LICENSE.md) para más información
 
-Documentación
--------------
+Descripción
+------------
 
 Slim posee cuantro handlers para manejar distintos tipos de error
 
@@ -23,11 +25,13 @@ Slim posee cuantro handlers para manejar distintos tipos de error
 * Método HTTP incorrecto (NotAllowed)
 * Captura de excepciones de usuario (Error)
 
+Cada uno de ellos devuelve el error en el formato que sea solicitado por a cabecera Content-type (hmtl, json, etc). Este middleware reescribe estos handlers para que siempre devuelvan formato JSON.
+
 __Formato de respuesta__
 
 Para unificar el formato de respuesta se siguió el estandar de [JsonApi](http://jsonapi.org/format/#error-objects)
 
-Ejemplo:
+### Ejemplo
 
 ```
 {
@@ -44,10 +48,29 @@ Ejemplo:
 
 Donde:
 
-* title: Titulo del error
-* details: Detalles del error (solo es devuelto cuando el parametro `displayErrorDetails` tiene como valor `true`)
-* code: Código propio del error
-* status: HTTP CODE del error
+| key | Descripción |
+|---|---|
+| title | Título del error |
+| details | Detalles del error (solo es devuelto cuando el parametro `displayErrorDetails` tiene como valor `true`) |
+| code | Código propio del error |
+| status | HTTP CODE del error |
+
+### Configuración de Slim
+
+```
+// para Desarrollo / QA
+$config['settings'] = [
+    "displayErrorDetails" => true
+];
+
+// para Producción
+$config['settings'] = [
+    "displayErrorDetails" => false
+];
+```
+
+Handlers
+--------
 
 ### Errores de PHP
 
