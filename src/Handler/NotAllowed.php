@@ -14,10 +14,10 @@
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @link      http://www.mostofreddy.com.ar
  */
-namespace Resty\Handler;
+namespace Resty\Slim\Handler;
 // Resty
-use Resty\Handler\AbstracErrorHandler;
-use Resty\ErrorMessage;
+use Resty\Slim\Handler\AbstracErrorHandler;
+use Resty\Slim\ErrorMessage;
 // PSR
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

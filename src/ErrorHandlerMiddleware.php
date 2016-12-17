@@ -14,12 +14,12 @@
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @link      http://www.mostofreddy.com.ar
  */
-namespace Resty;
+namespace Resty\Slim;
 // Resty
-use Resty\Handler\PhpError;
-use Resty\Handler\Error;
-use Resty\Handler\NotFound;
-use Resty\Handler\NotAllowed;
+use Resty\Slim\Handler\PhpError;
+use Resty\Slim\Handler\Error;
+use Resty\Slim\Handler\NotFound;
+use Resty\Slim\Handler\NotAllowed;
 // Slim
 use Slim\Container;
 // PSR

@@ -5,7 +5,7 @@
     "keywords": ["slim", "framework", "micro", "error", "error handler", "json", "rest", "restfull", "resty", "restyphp"],
     "homepage": "https://github.com/mostofreddy/slim-json-handler-error",
     "license": "MIT",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "authors": [
         {
             "name": "Federico Lozada Mosto",
@@ -23,8 +23,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Resty\\": "src/",
-            "Resty\\Test\\": "tests/src/"
+            "Resty\\Slim\\": "src/",
+            "Resty\\Slim\\Test\\": "tests/src/"
         }
     }
 }
