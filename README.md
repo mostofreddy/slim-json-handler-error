@@ -76,7 +76,7 @@ Handlers
 
 ### Errores de PHP
 
-Clase: `\Resty\Handler\PhpError`
+Clase: `\Resty\Slim\Handler\PhpError`
 
 ```
 {
@@ -93,7 +93,7 @@ Clase: `\Resty\Handler\PhpError`
 
 ### Ruta no encontrada
 
-Clase: `\Resty\Handler\NotFound`
+Clase: `\Resty\Slim\Handler\NotFound`
 
 ```
 {
@@ -110,7 +110,7 @@ Clase: `\Resty\Handler\NotFound`
 
 ### Método HTTP incorrecto
 
-Clase: `\Resty\Handler\NotAllowed`
+Clase: `\Resty\Slim\Handler\NotAllowed`
 
 ```
 {
@@ -127,7 +127,7 @@ Clase: `\Resty\Handler\NotAllowed`
 
 ### Captura de excepciones de usuario
 
-Clase: `\Resty\Handler\Error`
+Clase: `\Resty\Slim\Handler\Error`
 
 ```
 {
@@ -168,7 +168,7 @@ $config['settings'] = [
 
 $api = new App($config);
 
-$api->add('\Resty\ErrorHandlerMiddleware');
+$api->add('\Resty\Slim\ErrorHandlerMiddleware');
 
 $api->get('/', function (ServerRequestInterface $request, ResponseInterface $response) {
     $body = $response->getBody();
@@ -199,6 +199,6 @@ $api->get('/', function (ServerRequestInterface $request, ResponseInterface $res
     $body = $response->getBody();
     $body->write('Hello');
     return $response;
-})->add('\Resty\ErrorHandlerMiddleware');;
+})->add('\Resty\Slim\ErrorHandlerMiddleware');;
 $api->run();
 ```
