@@ -14,9 +14,9 @@
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @link      http://www.mostofreddy.com.ar
  */
-namespace Resty\Test;
+namespace Resty\Slim\Test;
 
-use Resty\ErrorHandlerMiddleware;
+use Resty\Slim\ErrorHandlerMiddleware;
 use Slim\Container;
 
 use Slim\Http\Request;
@@ -60,22 +60,22 @@ class ErrorHandlerMiddlewareTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'Resty\Handler\Error',
+            'Resty\Slim\Handler\Error',
             $container['errorHandler']
         );
 
         $this->assertInstanceOf(
-            'Resty\Handler\PhpError',
+            'Resty\Slim\Handler\PhpError',
             $container['phpErrorHandler']
         );
 
         $this->assertInstanceOf(
-            'Resty\Handler\NotFound',
+            'Resty\Slim\Handler\NotFound',
             $container['notFoundHandler']
         );
 
         $this->assertInstanceOf(
-            'Resty\Handler\NotAllowed',
+            'Resty\Slim\Handler\NotAllowed',
             $container['notAllowedHandler']
         );
     }

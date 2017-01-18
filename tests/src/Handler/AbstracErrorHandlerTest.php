@@ -14,9 +14,9 @@
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @link      http://www.mostofreddy.com.ar
  */
-namespace Resty\Test;
+namespace Resty\Slim\Test;
 
-use Resty\Handler\Error;
+use Resty\Slim\Handler\Error;
 use Slim\Http\Response;
 /**
  * AbstracErrorHandlerTest
@@ -43,7 +43,7 @@ class AbstracErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
         $param = json_encode($this->param);
 
-        $ref = new \ReflectionMethod('\Resty\Handler\Error', 'response');
+        $ref = new \ReflectionMethod('\Resty\Slim\Handler\Error', 'response');
         $ref->setAccessible(true);
         $object = $ref->invokeArgs($error, [new Response, $param]);
 
@@ -63,7 +63,7 @@ class AbstracErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
         $param = json_encode($this->param);
 
-        $ref = new \ReflectionMethod('\Resty\Handler\Error', 'response');
+        $ref = new \ReflectionMethod('\Resty\Slim\Handler\Error', 'response');
         $ref->setAccessible(true);
         $object = $ref->invokeArgs($error, [new Response, $param]);
 
@@ -80,7 +80,7 @@ class AbstracErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
         $param = json_encode($this->param);
 
-        $ref = new \ReflectionMethod('\Resty\Handler\Error', 'response');
+        $ref = new \ReflectionMethod('\Resty\Slim\Handler\Error', 'response');
         $ref->setAccessible(true);
         $object = $ref->invokeArgs($error, [new Response, $param]);
 
@@ -100,7 +100,7 @@ class AbstracErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
         $param = json_encode($this->param);
 
-        $ref = new \ReflectionMethod('\Resty\Handler\Error', 'response');
+        $ref = new \ReflectionMethod('\Resty\Slim\Handler\Error', 'response');
         $ref->setAccessible(true);
         $object = $ref->invokeArgs($error, [new Response, $param]);
 

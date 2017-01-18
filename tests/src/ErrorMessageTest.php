@@ -14,9 +14,9 @@
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @link      http://www.mostofreddy.com.ar
  */
-namespace Resty\Test;
+namespace Resty\Slim\Test;
 
-use Resty\ErrorMessage;
+use Resty\Slim\ErrorMessage;
 /**
  * ErrorMessageTest
  *
@@ -107,7 +107,7 @@ class ErrorMessageTest extends \PHPUnit_Framework_TestCase
         $error = new ErrorMessage();
         $error->append("mytitle1", "mydetails1", 404, 1);
 
-        $ref = new \ReflectionMethod('\Resty\ErrorMessage', 'render');
+        $ref = new \ReflectionMethod('\Resty\Slim\ErrorMessage', 'render');
         $ref->setAccessible(true);
         $r = $ref->invoke($error);
 
@@ -138,7 +138,7 @@ class ErrorMessageTest extends \PHPUnit_Framework_TestCase
         $error->append("mytitle1", "mydetails1", 404, 1);
         $error->addMeta("myMetaKey", "myMetaValue");
 
-        $ref = new \ReflectionMethod('\Resty\ErrorMessage', 'render');
+        $ref = new \ReflectionMethod('\Resty\Slim\ErrorMessage', 'render');
         $ref->setAccessible(true);
         $r = $ref->invoke($error);
 
