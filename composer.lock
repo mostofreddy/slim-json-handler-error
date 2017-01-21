@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ee02605bbaba1ac358629dd97558681c",
-    "content-hash": "37571deed873292cf24b418e77d89bf9",
+    "hash": "a598af4bbaab8b58f8666cf3d589c0e6",
+    "content-hash": "08342393b06bebe3f612ca0a7b14189f",
     "packages": [
         {
             "name": "mostofreddy/hateoas-php",
