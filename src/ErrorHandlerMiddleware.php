@@ -16,16 +16,9 @@
  */
 namespace Resty\Slim;
 // Resty
-use Resty\Slim\Handler\PhpError;
-use Resty\Slim\Handler\Error;
-use Resty\Slim\Handler\NotFound;
-use Resty\Slim\Handler\NotAllowed;
+use Resty\Slim\DefaultJsonResponse;
 // Slim
 use Slim\Container;
-// PSR
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
-
 /**
  * ErrorHandlerMiddleware
  *
@@ -39,7 +32,6 @@ use Psr\Http\Message\ResponseInterface;
 class ErrorHandlerMiddleware
 {
     protected $container;
-
     /**
      * Contructor
      * 
@@ -49,7 +41,6 @@ class ErrorHandlerMiddleware
     {
         $this->container = $container;
     }
-
     /**
      * Middleware
      *
@@ -61,21 +52,13 @@ class ErrorHandlerMiddleware
      */
     public function __invoke($request, $response, $next)
     {
-        $this->container['errorHandler'] = function ($container) {
-            return new Error($container->get('settings')['displayErrorDetails']);
-        };
-        $this->container['phpErrorHandler'] = function ($container) {
-            return new PhpError($container->get('settings')['displayErrorDetails']);
-        };
-        $this->container['notFoundHandler'] = function ($container) {
-            return new NotFound($container->get('settings')['displayErrorDetails']);
-        };
-        $this->container['notAllowedHandler'] = function ($container) {
-            return new NotAllowed($container->get('settings')['displayErrorDetails']);
-        };
+        // Redefine - errors
+        $this->container['errorHandler'] = DefaultJsonResponse::jsonError();
+        $this->container['phpErrorHandler'] = DefaultJsonResponse::jsonPhpError();
+        $this->container['notFoundHandler'] = DefaultJsonResponse::jsonNotFound();
+        $this->container['notAllowedHandler'] = DefaultJsonResponse::jsonNotAllowed();
 
         $response = $next($request, $response);
-
         return $response;
     }
 }

@@ -17,11 +17,11 @@
 namespace Resty\Slim\Handler;
 // Resty
 use Resty\Slim\Handler\AbstracErrorHandler;
-use Resty\Slim\ErrorMessage;
 // PSR
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-
+// Hateoas
+use Mostofreddy\Hateoas\ErrorMessage;
 /**
  * Error
  *
@@ -36,8 +36,6 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class Error extends AbstracErrorHandler
 {
-    const HTTP_STATUS = 500;
-
     /**
      * Invoca la respuesta
      * 
@@ -59,20 +57,20 @@ class Error extends AbstracErrorHandler
      * 
      * @param \Throwable $error Instancia de Throwable
      * 
-     * @return string
+     * @return ErrorMessage
      */
-    protected function render(\Throwable $error)
+    protected function render(\Throwable $error):ErrorMessage
     {
         $message = new ErrorMessage();
 
         $details = [];
+
         do {
             $aux = [
                 'type' => get_class($error),
                 'code' => $error->getCode(),
                 'message' => $error->getMessage()
             ];
-
             if ($this->displayErrorDetails) {
                 $aux = $aux + [
                     'file' => $error->getFile(),
@@ -80,16 +78,14 @@ class Error extends AbstracErrorHandler
                     'trace' => explode("\n", $error->getTraceAsString())
                 ];
             }
-
             $details[] = $aux;
         } while ($error = $error->getPrevious());
 
-        $message->append(
+        $message->addError(
             'Resty Application Error',
             $details,
             static::HTTP_STATUS
         );
-
-        return json_encode($message, JSON_PRETTY_PRINT);
+        return $message;
     }
 }

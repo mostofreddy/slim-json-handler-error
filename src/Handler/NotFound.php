@@ -18,11 +18,11 @@ namespace Resty\Slim\Handler;
 
 // Resty
 use Resty\Slim\Handler\AbstracErrorHandler;
-use Resty\Slim\ErrorMessage;
 // PSR
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-
+// Hateoas
+use Mostofreddy\Hateoas\ErrorMessage;
 /**
  * NotFound
  *
@@ -59,16 +59,17 @@ class NotFound extends AbstracErrorHandler
      * 
      * @param ServerRequestInterface $request Instancia de Request
      * 
-     * @return string
+     * @return ErrorMessage
      */
-    protected function render(ServerRequestInterface $request) 
+    protected function render(ServerRequestInterface $request):ErrorMessage
     {
         $message = new ErrorMessage();
-        $message->append(
+        $message->addError(
             'Page not found',
             'Request => '.$request->getMethod().":".$request->getUri()->__toString(),
             static::HTTP_STATUS
         );
-        return json_encode($message, JSON_PRETTY_PRINT);
+
+        return $message;
     }
 }

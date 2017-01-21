@@ -16,8 +16,8 @@
  */
 namespace Resty\Slim\Handler;
 
+// Slim
 use Psr\Http\Message\ResponseInterface;
-use Slim\Http\Body;
 
 /**
  * AbstracErrorHandler
@@ -48,18 +48,12 @@ abstract class AbstracErrorHandler
      * Transforma la respuesta en json
      * 
      * @param ResponseInterface $response Instancia de ResponseInterface
-     * @param string            $output   String de respuesta en formato JSON
+     * @param mixed             $output   String de respuesta en formato JSON
      * 
      * @return ResponseInterface
      */
-    protected function response(ResponseInterface $response, string $output)
+    protected function response(ResponseInterface $response, $output):ResponseInterface
     {
-        $body = new Body(fopen('php://temp', 'r+'));
-        $body->write($output);
-
-        return $response
-            ->withStatus(static::HTTP_STATUS)
-            ->withHeader('Content-type', 'application/json')
-            ->withBody($body);
+        return $response->withJson($output, static::HTTP_STATUS);
     }
 }

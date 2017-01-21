@@ -85,26 +85,9 @@ class AbstracErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $object = $ref->invokeArgs($error, [new Response, $param]);
 
         $this->assertEquals(
-            ['Content-type' => ['application/json']],
+            ['Content-Type' => ['application/json;charset=utf-8']],
             $object->getHeaders()
         );
-    }
-    /**
-     * Testea que el body se configure bien
-     * 
-     * @return void
-     */
-    public function testBody()
-    {
-        $error = new Error(false);
-
-        $param = json_encode($this->param);
-
-        $ref = new \ReflectionMethod('\Resty\Slim\Handler\Error', 'response');
-        $ref->setAccessible(true);
-        $object = $ref->invokeArgs($error, [new Response, $param]);
-
-        $this->assertAttributeEquals($param, 'body', $object);
     }
 
     /**
