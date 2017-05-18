@@ -2,6 +2,11 @@ Slim Json Error Handler
 ======================
 
 [![Build Status](https://travis-ci.org/mostofreddy/slim-json-handler-error.svg?branch=master)](https://travis-ci.org/mostofreddy/slim-json-handler-error)
+[![Latest Stable Version](https://poser.pugx.org/restyphp/slim-json-handler-error/v/stable)](https://packagist.org/packages/restyphp/slim-json-handler-error)
+[![License](https://poser.pugx.org/restyphp/slim-json-handler-error/license)](https://packagist.org/packages/restyphp/slim-json-handler-error)
+[![Total Downloads](https://poser.pugx.org/restyphp/slim-json-handler-error/downloads)](https://packagist.org/packages/restyphp/slim-json-handler-error)
+[![composer.lock](https://poser.pugx.org/restyphp/slim-json-handler-error/composerlock)](https://packagist.org/packages/restyphp/slim-json-handler-error)
+
 
 Redefine el formato de los mensajes de Slim a JSON. Implementa [JSON-API Errors]([JSON-API Errors](http://jsonapi.org/format/#errors)) (v1.0).
 
