@@ -20,8 +20,8 @@ use Resty\Slim\Handler\AbstracErrorHandler;
 // PSR
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-// Hateoas
-use Mostofreddy\Hateoas\ErrorMessage;
+// Resty - JsonApiError
+use Resty\JsonApiError\Message;
 
 /**
  * NotFound
@@ -38,6 +38,7 @@ use Mostofreddy\Hateoas\ErrorMessage;
 class NotAllowed extends AbstracErrorHandler
 {
     const HTTP_STATUS = 405;
+    const TITLE = 'Method Not Allowed';
 
     /**
      * Invoca la respuesta
@@ -61,17 +62,15 @@ class NotAllowed extends AbstracErrorHandler
      * @param ServerRequestInterface $request Instancia de Request
      * @param array                  $methods Array de metodos http disponibles
      * 
-     * @return ErrorMessage
+     * @return Message
      */
-    protected function render(ServerRequestInterface $request, array $methods):ErrorMessage
+    protected function render(ServerRequestInterface $request, array $methods):Message
     {
-        $message = new ErrorMessage();
-        $message->addError(
-            'Method not allowed',
-            'Request => '.$request->getMethod().":".$request->getUri()->__toString()
-            .'. Method not allowed. Must be one of '.implode(", ", $methods),
-            static::HTTP_STATUS
-        );
+        $detail = 'Request => '.$request->getMethod().":".$request->getUri()->__toString()
+            .'. Method not allowed. Must be one of '.implode(", ", $methods);
+        $message = new Message();
+        $message->add(static::TITLE, $detail)
+            ->setStatus(static::HTTP_STATUS);
 
         return $message;
     }

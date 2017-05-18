@@ -1,6 +1,6 @@
 <?php
 /**
- * DefaultJsonResponse
+ * BuilderJsonErrorResponses
  *
  * PHP version 7+
  *
@@ -16,7 +16,6 @@
  */
 namespace Resty\Slim;
 // Resty
-use Resty\Slim\Handler\PhpError;
 use Resty\Slim\Handler\Error;
 use Resty\Slim\Handler\NotFound;
 use Resty\Slim\Handler\NotAllowed;
@@ -24,7 +23,7 @@ use Resty\Slim\Handler\NotAllowed;
 use Slim\Container;
 
 /**
- * DefaultJsonResponse
+ * BuilderJsonErrorResponses
  *
  * @category  Resty
  * @package   Resty\Slim
@@ -33,7 +32,7 @@ use Slim\Container;
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @link      http://www.mostofreddy.com.ar
  */
-class DefaultJsonResponse
+class BuilderJsonErrorResponses
 {
     /**
      * Json PhpError
@@ -43,7 +42,7 @@ class DefaultJsonResponse
     public static function jsonPhpError():\Closure
     {
         return function (Container $container) {
-            return new PhpError($container->get('settings')['displayErrorDetails']);
+            return new Error($container->get('settings')['displayErrorDetails']);
         };
     }
 

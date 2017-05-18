@@ -20,8 +20,8 @@ use Resty\Slim\Handler\AbstracErrorHandler;
 // PSR
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-// Hateoas
-use Mostofreddy\Hateoas\ErrorMessage;
+// Resty - JsonApiError
+use Resty\JsonApiError\Message;
 /**
  * Error
  *
@@ -36,6 +36,8 @@ use Mostofreddy\Hateoas\ErrorMessage;
  */
 class Error extends AbstracErrorHandler
 {
+    const TITLE = "Internal server error";
+
     /**
      * Invoca la respuesta
      * 
@@ -57,35 +59,28 @@ class Error extends AbstracErrorHandler
      * 
      * @param \Throwable $error Instancia de Throwable
      * 
-     * @return ErrorMessage
+     * @return Message
      */
-    protected function render(\Throwable $error):ErrorMessage
+    protected function render(\Throwable $error):Message
     {
-        $message = new ErrorMessage();
+        $message = new Message();
+        $e = $message->add(static::TITLE, $error->getMessage())
+            ->setStatus(static::HTTP_STATUS)
+            ->setCode($error->getCode());
 
-        $details = [];
-
-        do {
-            $aux = [
-                'type' => get_class($error),
-                'code' => $error->getCode(),
-                'message' => $error->getMessage()
-            ];
-            if ($this->displayErrorDetails) {
-                $aux = $aux + [
+        if ($this->displayErrorDetails) {
+            $e->setSource(
+                [
                     'file' => $error->getFile(),
-                    'line' => $error->getLine(),
+                    'line' => $error->getLine()
+                ]
+            )->setMeta(
+                [
                     'trace' => explode("\n", $error->getTraceAsString())
-                ];
-            }
-            $details[] = $aux;
-        } while ($error = $error->getPrevious());
+                ]
+            );
+        }
 
-        $message->addError(
-            'Resty Application Error',
-            $details,
-            static::HTTP_STATUS
-        );
         return $message;
     }
 }

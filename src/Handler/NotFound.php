@@ -21,8 +21,9 @@ use Resty\Slim\Handler\AbstracErrorHandler;
 // PSR
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-// Hateoas
-use Mostofreddy\Hateoas\ErrorMessage;
+// Resty - JsonApiError
+use Resty\JsonApiError\Message;
+
 /**
  * NotFound
  *
@@ -38,6 +39,7 @@ use Mostofreddy\Hateoas\ErrorMessage;
 class NotFound extends AbstracErrorHandler
 {
     const HTTP_STATUS = 404;
+    const TITLE = 'Page not found';
 
     /**
      * Invoca la respuesta
@@ -59,16 +61,13 @@ class NotFound extends AbstracErrorHandler
      * 
      * @param ServerRequestInterface $request Instancia de Request
      * 
-     * @return ErrorMessage
+     * @return Message
      */
-    protected function render(ServerRequestInterface $request):ErrorMessage
+    protected function render(ServerRequestInterface $request):Message
     {
-        $message = new ErrorMessage();
-        $message->addError(
-            'Page not found',
-            'Request => '.$request->getMethod().":".$request->getUri()->__toString(),
-            static::HTTP_STATUS
-        );
+        $message = new Message();
+        $message->add(static::TITLE, 'Request => '.$request->getMethod().":".$request->getUri()->__toString())
+            ->setStatus(static::HTTP_STATUS);
 
         return $message;
     }
