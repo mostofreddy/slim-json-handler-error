@@ -11,4 +11,11 @@
             <property name="lineLimit" value="140"/>
         </properties>
     </rule>
+
+    <!-- Files -->
+    <file>./src</file>
+    <file>./tests/src</file>
+
+    <!-- Params -->
+    <arg name="colors"/>
 </ruleset>
