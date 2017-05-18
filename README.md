@@ -3,21 +3,19 @@ Slim Json Error Handler
 
 [![Build Status](https://travis-ci.org/mostofreddy/slim-json-handler-error.svg?branch=master)](https://travis-ci.org/mostofreddy/slim-json-handler-error)
 
-Handlers de errores para Slim que siempre devuelven los errores en formato JSON utilizando el estandar de JSON-API.
-
-Este middleware esta pensado para ser utilizado cuando se desarrollan apis Restfull que devuelven siempre formato JSON
+Redefine el formato de los mensajes de Slim a JSON. Implementa [JSON-API Errors]([JSON-API Errors](http://jsonapi.org/format/#errors)) (v1.0).
 
 Versión estable
 ---------------
 
-0.3.0
+0.4.0
 
 License
 -------
 
 The MIT License (MIT). Ver el archivo [LICENSE](LICENSE.md) para más información
 
-Descripción
+Introducción
 ------------
 
 Slim posee cuantro handlers para manejar distintos tipos de error
@@ -31,7 +29,7 @@ Cada uno de ellos devuelve el error en el formato que sea solicitado por a cabec
 
 __Formato de respuesta__
 
-Para unificar el formato de respuesta se siguió el estandar de [JsonApi](http://jsonapi.org/format/#error-objects)
+Para unificar el formato de respuesta se siguió el estandar de [JSON-API Error](http://jsonapi.org/format/#errors)
 
 ### Ejemplo
 
@@ -39,9 +37,9 @@ Para unificar el formato de respuesta se siguió el estandar de [JsonApi](http:/
 {
   "errors": [
     {
-      "title": "Resty Application Error",
-      "details": "",
-      "code": 0,
+      "title": "Internal server error",
+      "details": "...",
+      "code": XXX,
       "status": 500
     }
   ]
@@ -57,9 +55,19 @@ Donde:
 | code | Código propio del error |
 | status | HTTP CODE del error |
 
-### Configuración de Slim
+Configuración de Slim
+---------------------
 
-```
+```php
+
+// Slim
+use Slim\App;
+use Resty\Slim\BuilderJsonErrorResponses;
+
+$config = [
+    // ....
+];
+
 // para Desarrollo / QA
 $config['settings'] = [
     "displayErrorDetails" => true
@@ -69,23 +77,39 @@ $config['settings'] = [
 $config['settings'] = [
     "displayErrorDetails" => false
 ];
+
+// Redefine - errors
+$config['errorHandler'] = BuilderJsonErrorResponses::jsonError();
+$config['phpErrorHandler'] = BuilderJsonErrorResponses::jsonPhpError();
+$config['notFoundHandler'] = BuilderJsonErrorResponses::jsonNotFound();
+$config['notAllowedHandler'] = BuilderJsonErrorResponses::jsonNotAllowed();
+
+$app = new App($config);
+// ...
 ```
 
-Handlers
+Mensajes de error
 --------
 
 ### Errores de PHP
 
-Clase: `\Resty\Slim\Handler\PhpError`
+Clase: `\Resty\Slim\Handler\Error`
 
 ```
 {
   "errors": [
     {
-      "title": "Resty Application Error",
-      "details": "",
-      "code": 0,
-      "status": 500
+        "title": "Internal server error",
+        "details": "...",
+        "code": 0,
+        "status": 500,
+        "source": {
+            "file": "...",
+            "line": "..."
+        },
+        "meta": {
+            "trace": [...]
+        }
     }
   ]
 }
@@ -100,7 +124,7 @@ Clase: `\Resty\Slim\Handler\NotFound`
   "errors": [
     {
       "title": "Page not found",
-      "details": "Request => GET:http://localhost:5005/hola",
+      "details": "Request => GET:http://www.dummy.com/dummies",
       "code": 0,
       "status": 404
     }
@@ -117,7 +141,7 @@ Clase: `\Resty\Slim\Handler\NotAllowed`
   "errors": [
     {
       "title": "Method not allowed",
-      "details": "Request => POST:http://localhost:5005/. Method not allowed. Must be one of GET",
+      "details": "Request => POST:http://www.dummy.com. Method not allowed. Must be one of GET",
       "code": 0,
       "status": 405
     }
@@ -133,72 +157,19 @@ Clase: `\Resty\Slim\Handler\Error`
 {
   "errors": [
     {
-      "title": "Resty Application Error",
-      "details": [
-        {
-          "type": "MyException",
-          "code": 12312,
-          "message": "Mi mensaje de error"
+        "title": "Internal server error",
+        "details": "...",
+        "code": 0,
+        "status": 500,
+        "source": {
+            "file": "...",
+            "line": "..."
+        },
+        "meta": {
+            "trace": [...]
         }
-      ],
-      "code": 0,
-      "status": 501
     }
   ]
 }
 ```
 
-
-## Ejemplos de uso
-
-### Configurar middleware para todas las rutas
-
-```
-require_once "../vendor/autoload.php";
-
-use Slim\App;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
-
-$config = [];
-$config['settings'] = [
-    "displayErrorDetails" => true, // or false
-    "determineRouteBeforeAppMiddleware" => true
-];
-
-$api = new App($config);
-
-$api->add('\Resty\Slim\ErrorHandlerMiddleware');
-
-$api->get('/', function (ServerRequestInterface $request, ResponseInterface $response) {
-    $body = $response->getBody();
-    $body->write('Hello');
-    return $response;
-});
-$api->run();
-```
-
-### Configurar middleware para alguna ruta (o grupo) en particular
-
-```
-require_once "../vendor/autoload.php";
-
-use Slim\App;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
-
-$config = [];
-$config['settings'] = [
-    "displayErrorDetails" => true, // or false
-    "determineRouteBeforeAppMiddleware" => true
-];
-
-$api = new App($config);
-
-$api->get('/', function (ServerRequestInterface $request, ResponseInterface $response) {
-    $body = $response->getBody();
-    $body->write('Hello');
-    return $response;
-})->add('\Resty\Slim\ErrorHandlerMiddleware');;
-$api->run();
-```
