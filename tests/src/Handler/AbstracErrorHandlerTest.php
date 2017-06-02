@@ -18,6 +18,7 @@ namespace Resty\Slim\Test;
 
 use Resty\Slim\Handler\Error;
 use Slim\Http\Response;
+use PHPUnit\Framework\TestCase;
 /**
  * AbstracErrorHandlerTest
  *
@@ -28,7 +29,7 @@ use Slim\Http\Response;
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @link      http://www.mostofreddy.com.ar
  */
-class AbstracErrorHandlerTest extends \PHPUnit_Framework_TestCase
+class AbstracErrorHandlerTest extends TestCase
 {
     protected $object;
     protected $param = ["saludo" => 'hola'];
