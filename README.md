@@ -13,7 +13,7 @@ Redefine el formato de los mensajes de Slim a JSON. Implementa [JSON-API Errors]
 Versión estable
 ---------------
 
-0.4.0
+0.4.1
 
 License
 -------
