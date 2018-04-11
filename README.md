@@ -1,3 +1,5 @@
+**Deprecated**
+
 Slim Json Error Handler
 ======================
 
